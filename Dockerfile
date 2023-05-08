@@ -24,6 +24,7 @@ COPY graphql.config.js .
 
 FROM dependencies as web_build
 
+COPY api api
 COPY web web
 RUN yarn rw build web
 
