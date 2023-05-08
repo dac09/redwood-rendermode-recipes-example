@@ -1,11 +1,16 @@
 ARG BASE_IMAGE=node:18-alpine
 FROM ${BASE_IMAGE} as base
 
+# Needed for running the docker container on M1/M2 because ARM images are different?!
+RUN apk add --update python3 make g++ && rm -rf /var/cache/apk/*
+###
+
 RUN mkdir /app
 WORKDIR /app
 
 # Required for building the api and web distributions
-ENV NODE_ENV development
+ENV NODE_ENV production
+
 
 FROM base as dependencies
 
@@ -14,6 +19,7 @@ COPY .yarnrc.yml .yarnrc.yml
 COPY package.json package.json
 COPY web/package.json web/package.json
 COPY api/package.json api/package.json
+
 COPY yarn.lock yarn.lock
 
 RUN --mount=type=cache,target=/root/.yarn/berry/cache \
@@ -24,6 +30,7 @@ COPY graphql.config.js .
 
 FROM dependencies as web_build
 
+COPY api api
 COPY web web
 RUN yarn rw build web
 
