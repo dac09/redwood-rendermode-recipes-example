@@ -1,0 +1,40 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = "native"
+}
+
+model Recipe {
+  id         String    @id @default(cuid())
+  name       String
+  cuisine    String?   @default("Tasty")
+  createdAt  DateTime  @default(now())
+  content    String
+  imageUrl   String?
+  blurb      String?
+  categoryId String?
+  category   Category? @relation(fields: [categoryId], references: [id])
+  users User[]
+}
+
+model Category {
+  id       String   @id @default(cuid())
+  name     String
+  imageUrl String?
+  recipes  Recipe[]
+}
+
+model User {
+  id                  Int       @id @default(autoincrement())
+  email               String    @unique
+  hashedPassword      String
+  salt                String
+  resetToken          String?
+  resetTokenExpiresAt DateTime?
+  roles               String    @default("USER")
+  recipes             Recipe[]
+}
