@@ -6,7 +6,7 @@ set -ex
 # yarn rw prisma migrate deploy
 
 # ⚠️ Demo Only: seed the database for demo, do NOT copy this line
-npx prisma db seed --schema /app/api/db/schema.prisma
+npx prisma db seed
 ################
 
 # This alternative command uses less memory

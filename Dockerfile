@@ -52,6 +52,10 @@ COPY --from=web_build /app/web/dist /app/web/dist
 COPY --from=api_build /app/api /app/api
 COPY --from=api_build /app/node_modules/.prisma /app/node_modules/.prisma
 
+## Copy scripts over to the final image
+COPY --from=api_build /app/scripts /app/scripts
+
+
 COPY .fly .fly
 
 ENTRYPOINT ["sh"]
