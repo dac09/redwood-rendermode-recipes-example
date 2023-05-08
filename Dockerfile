@@ -39,6 +39,12 @@ FROM dependencies as api_build
 COPY api api
 RUN yarn rw build api
 
+### ⚠️ Seed the database temporarily - this is not recommended!
+### We are only doing this for our demo app
+COPY scripts scripts
+RUN yarn rw prisma db seed
+##########################
+
 FROM dependencies
 
 ENV NODE_ENV development

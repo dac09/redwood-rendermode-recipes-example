@@ -2,9 +2,12 @@ import fs from 'fs'
 import path from 'path'
 
 import type { Prisma } from '@prisma/client'
-import { db } from 'api/src/lib/db'
 
 import { hashPassword } from '@redwoodjs/auth-dbauth-api'
+
+// @MARK seeding is broken with new paths, if you don't import from $api
+// eslint-disable-next-line no-restricted-imports
+import { db } from '$api/src/lib/db'
 
 export default async () => {
   try {
