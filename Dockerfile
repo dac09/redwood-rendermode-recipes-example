@@ -46,7 +46,7 @@ COPY scripts scripts
 
 FROM dependencies
 
-ENV NODE_ENV development
+ENV NODE_ENV production
 
 COPY --from=web_build /app/web/dist /app/web/dist
 COPY --from=api_build /app/api /app/api
